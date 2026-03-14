@@ -73,22 +73,9 @@ It is intentionally designed to demonstrate:
 - how cloud infrastructure decisions shape reliability, scalability, and UX
 - how durable state and artifact management matter in production AI systems
 
-### What This Repository Is **Not**
-
-This repository is **not**:
-
-- the production codebase
-- a source dump
-- a reverse-engineered internal system replica
-- a disclosure of private APIs, schemas, or infrastructure
-
 All examples in this repository are intentionally:
 
-- **generalized**
-- **simplified**
-- **illustrative**
-- **non-production-identical**
-
+- **generalized and simplified**
 ---
 
 ## My Role
@@ -153,7 +140,7 @@ It is designed to support:
 - safer frontend/backend boundaries
 - user-friendly multi-stage generation UX
 
-### Core Takeaway
+### Core Development Agenda
 
 TinyDOOR is not just a synchronous inference app.
 
@@ -206,7 +193,7 @@ The frontend (e.g. React/Next.js) drives the multi-step user journey and product
 - final delivery flows
 - client-side media preparation utilities
 
-**Representative responsibilities (generalized):**
+**Representative responsibilities:**
 
 - page routing and onboarding flow
 - auth views
@@ -234,7 +221,7 @@ This layer mattered because parts of the user-facing workflow depended on coordi
 
 ### 3) Service Layer — Application Backend
 
-The application backend (e.g. Django or similar Python framework) acted as the stateful application core.
+The application backend (e.g. Django framework) acted as the stateful application core.
 
 It served as the durable business layer where product entities became persistent, queryable, and business-facing.
 
