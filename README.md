@@ -22,9 +22,7 @@ My work included:
 - AI generation workflow coordination
 - storage organization and output retrieval patterns
 
-I contributed **388 hours** and was the **#1 contributor across TinyDOOR frontend and backend repositories**, with:
-- **107 commits** in the frontend repository
-- **61 commits** in the backend repository
+I contributed **~400 hours** and was the **#1 contributor across TinyDOOR frontend and backend repositories**.
 
 > Note: This repository intentionally presents a sanitized architectural view rather than proprietary implementation details.
 
