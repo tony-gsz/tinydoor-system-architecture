@@ -81,10 +81,8 @@ My contributions included:
 
 ### Contribution Highlights
 
-- **388 total hours contributed**
+- **~400 total hours contributed**
 - **#1 contributor across TinyDOOR frontend + backend repositories**
-- **107 commits** in the frontend repository
-- **61 commits** in the backend repository
 
 > This repository intentionally presents a **sanitized architectural view** rather than proprietary implementation details.
 
