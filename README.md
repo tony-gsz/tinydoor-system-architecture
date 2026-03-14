@@ -1,22 +1,23 @@
 # TinyDOOR System Architecture
 
-A **sanitized architecture case study** of a hybrid AI-enabled story generation platform built around **asynchronous workflows, cloud-native storage, and production-minded request lifecycle management**.
+A **public-safe architecture case study** of a hybrid AI-enabled story generation platform designed around **asynchronous workflows, cloud-native storage, and production-minded request lifecycle management**.
 
-> **Note:** This repository does **not** contain proprietary source code or internal production assets.  
-> It is a **portfolio-safe system design showcase** based on real engineering work, focused on architecture, backend workflows, cloud infrastructure patterns, and async orchestration.
+> **Important:** This repository is a **sanitized portfolio artifact**, not a mirror of the production system.  
+> It intentionally abstracts and generalizes implementation details to avoid exposing proprietary logic, internal naming, private infrastructure, or confidential product internals.
 
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Why This Repository Exists](#why-this-repository-exists)
 - [My Role](#my-role)
 - [Architecture at a Glance](#architecture-at-a-glance)
 - [Core System Design Principles](#core-system-design-principles)
 - [System Layers](#system-layers)
 - [Request Lifecycle Model](#request-lifecycle-model)
 - [End-to-End Story Generation Flow](#end-to-end-story-generation-flow)
-- [S3-Centric Storage Design](#s3-centric-storage-design)
+- [Artifact Storage Pattern](#artifact-storage-pattern)
 - [Key Engineering Decisions](#key-engineering-decisions)
 - [Architecture Strengths](#architecture-strengths)
 - [Tradeoffs and Risks](#tradeoffs-and-risks)
@@ -33,31 +34,60 @@ A **sanitized architecture case study** of a hybrid AI-enabled story generation 
 
 - user personalization inputs
 - uploaded images
-- story context
 - generation metadata
+- structured story context
 
 into a **multi-page illustrated storybook experience**.
 
-Rather than functioning as a simple "prompt → model → response" app, TinyDOOR is best understood as a **workflow-oriented AI product system** that manages:
+This repository focuses on the **architecture patterns** behind that kind of product rather than proprietary implementation.
+
+TinyDOOR is best understood not as a simple "prompt → model → response" app, but as a **workflow-oriented AI product system** that coordinates:
 
 - authentication
 - uploads
 - request creation
 - async state transitions
-- story generation
+- structured content generation
 - image generation
 - result aggregation
 - final asset delivery
 
-This repository focuses on the **system architecture and engineering patterns** behind that workflow.
+The emphasis of this repository is on:
 
-It is designed to showcase:
+- **system design**
+- **backend workflow thinking**
+- **cloud-native architecture**
+- **async orchestration**
+- **production-oriented AI product patterns**
 
-- **backend systems thinking**
-- **cloud infrastructure design**
-- **event-driven orchestration**
-- **async AI workflow design**
-- **production-oriented request lifecycle management**
+---
+
+## Why This Repository Exists
+
+This repository exists as a **portfolio-safe architecture showcase** based on real engineering work.
+
+It is intentionally designed to demonstrate:
+
+- how real AI products often behave like **workflow systems**, not one-shot model wrappers
+- how asynchronous generation affects product and backend design
+- how cloud infrastructure decisions shape reliability, scalability, and UX
+- how durable state and artifact management matter in production AI systems
+
+### What This Repository Is **Not**
+
+This repository is **not**:
+
+- the production codebase
+- a source dump
+- a reverse-engineered internal system replica
+- a disclosure of private APIs, schemas, or infrastructure
+
+All examples in this repository are intentionally:
+
+- **generalized**
+- **simplified**
+- **illustrative**
+- **non-production-identical**
 
 ---
 
@@ -65,26 +95,26 @@ It is designed to showcase:
 
 I contributed to TinyDOOR as a **Software Engineering Intern**, working across:
 
-- **backend systems**
-- **cloud-connected product flows**
-- **async AI workflows**
-- **frontend/backend integration**
-- **request lifecycle and result delivery patterns**
+- backend systems
+- cloud-connected product flows
+- async AI workflow integration
+- frontend/backend coordination
+- request lifecycle and result delivery patterns
 
-My contributions included:
+My work included:
 
-- supporting backend architecture and API workflow design
-- contributing to Django service flows and state-oriented endpoints
-- working on AWS-connected product flows involving authentication, storage, and Lambda-triggered async processing
-- helping shape request lifecycle handling and result delivery behavior
+- contributing to backend architecture and workflow discussions
+- supporting state-oriented backend service behavior
+- working with cloud-connected flows for authentication, storage, and async processing
+- helping shape request lifecycle handling and result delivery patterns
 - contributing across both frontend and backend repositories in a startup environment
 
 ### Contribution Highlights
 
-- **~400 total hours contributed**
-- **#1 contributor across TinyDOOR frontend + backend repositories**
+- **388 total hours contributed**
+- **#1 contributor across frontend + backend repositories**
 
-> This repository intentionally presents a **sanitized architectural view** rather than proprietary implementation details.
+> This repository intentionally presents **architecture patterns and engineering lessons**, not confidential implementation details.
 
 ---
 
@@ -92,48 +122,48 @@ My contributions included:
 
 TinyDOOR combines:
 
-- a **Next.js frontend** for the user-facing product journey
-- a **Django backend** for authentication, persistence, and state-oriented APIs
-- **AWS Lambda functions** for asynchronous generation and orchestration
-- **AWS services** for identity, storage, and supporting infrastructure
+- a **frontend** (e.g. React/Next.js) for the user-facing product journey
+- an **application backend** (e.g. Python/Django) for authentication, persistence, and state-oriented APIs
+- **serverless async workers** for event-driven generation workflows
+- **cloud services** (e.g. object storage, identity, notifications) for supporting infrastructure
 
 ### High-Level Flow
 
 ```text
-Frontend (Next.js)
+Frontend
         ↓
-Lambda Functions
-(request creation / event-driven orchestration / generation triggers)
+Async Processing Layer
+(event-driven orchestration / generation triggers)
         ↓
-Django Backend
-(auth, stories, uploads, webhooks, state queries)
+Application Backend
+(auth, persistence, state queries, callbacks)
         ↓
-AWS Services
-(S3, Cognito, Lambda, SES, supporting infrastructure)
+Cloud Services
+(object storage, identity, supporting infrastructure)
 ```
 
-TinyDOOR uses a hybrid layered + event-driven architecture.
+This is best described as a hybrid layered + event-driven architecture.
 
-This design exists to support:
+It is designed to support:
 
 - long-running generation workflows
-- multi-stage async processing
-- recoverability across partial failures
-- scalable storage of intermediate and final assets
-- safer separation between user-facing logic and generation-facing logic
-- a smoother product experience for multi-step AI generation
+- partial recoverability
+- clean separation between business state and async execution
+- scalable handling of intermediate and final artifacts
+- safer frontend/backend boundaries
+- user-friendly multi-stage generation UX
 
 ### Core Takeaway
 
-TinyDOOR is not a synchronous inference app.
+TinyDOOR is not just a synchronous inference app.
 
 It is a **workflow-first AI product system** built around:
 
 - durable state transitions
 - asynchronous orchestration
-- artifact storage
-- polling-based UX
-- timeout-aware recovery
+- artifact-backed processing
+- polling-based user experience
+- recoverability under long-running workloads
 
 That shift — from "model call" to "workflow system" — was one of the most important engineering lessons from the project.
 
@@ -144,26 +174,26 @@ That shift — from "model call" to "workflow system" — was one of the most im
 The architecture is built around several production-oriented principles:
 
 1. **Workflow-first, not model-first** — Stable business state separated from async generation execution
-2. **Artifact-driven storage** — For recoverability
+2. **Artifact-backed storage** — For recoverability
 3. **Explicit request-state transitions** — For frontend UX
-4. **Serverless execution** — With timeout-aware continuation
+4. **Serverless-friendly execution** — With continuation-aware design
 5. **Frontend, backend, and generation pipeline** — Designed together
 
 These principles made the system better suited for real-world AI product behavior, where generation is often:
 
 - multi-stage
-- failure-prone
 - latency-heavy
 - dependent on external services
-- tightly coupled to product UX
+- failure-prone
+- tightly coupled to user-facing product flow
 
 ---
 
 ## System Layers
 
-### 1) Presentation Layer — Frontend (Next.js)
+### 1) Presentation Layer — Frontend
 
-The frontend drives the multi-step user journey and product interaction flow.
+The frontend (e.g. React/Next.js) drives the multi-step user journey and product interaction flow.
 
 **Primary responsibilities:**
 
@@ -173,98 +203,70 @@ The frontend drives the multi-step user journey and product interaction flow.
 - image upload interactions
 - generation progress UI
 - result polling and display
-- ebook / final delivery flows
-- client-side image composition and cropping utilities
+- final delivery flows
+- client-side media preparation utilities
 
-**Representative areas:**
+**Representative responsibilities (generalized):**
 
-- `app/page.tsx`
-- `app/Components/`
-- `app/layout.tsx`
-- `app/login/`
-- `app/registration/`
-- `app/forgot-keys/`
-- `app/capture/`
-- `app/api/transcribe/`
+- page routing and onboarding flow
+- auth views
+- upload UI
+- generation progress screens
+- result display surfaces
+- media preparation / transformation helpers
 
 ### 2) Frontend Business Logic Layer
 
 TinyDOOR's frontend was not just a thin UI shell.
 
-It also contained meaningful product-side orchestration and state management, including API coordination and asset preparation.
-
-**Representative files:**
-
-- `lib/api.ts`
-- `CharacterContext.tsx`
-- `StoryContext.tsx`
-- `compilePageImage.ts`
-- `cropImage.ts`
+It also contained meaningful product-side orchestration and state management, including API coordination and client-assisted asset preparation.
 
 **Primary responsibilities:**
 
 - unified API client behavior
 - auth-aware request handling
-- story payload construction
-- client-side request-state awareness
-- image composition during finalization
-- crop / upload preparation utilities
+- generation payload construction
+- request-state awareness on the client
+- client-side media preparation
+- final asset composition where appropriate
 
-This layer was important because parts of the user-facing workflow depended on coordinated client-side state, not just backend responses.
+This layer mattered because parts of the user-facing workflow depended on coordinated client-side state, not just backend responses.
 
-### 3) Service Layer — Django Backend
+### 3) Service Layer — Application Backend
 
-The Django backend acted as the stateful application core.
+The application backend (e.g. Django or similar Python framework) acted as the stateful application core.
 
 It served as the durable business layer where product entities became persistent, queryable, and business-facing.
 
 **Primary responsibilities:**
 
-- Cognito-linked authentication
-- JWT validation
+- token-aware authentication integration
+- protected route validation
 - user-linked request persistence
-- story and request status query APIs
+- request and story status APIs
 - upload-related endpoints
-- webhook receivers from async workflows
-- AWS service wrappers / service integration logic
+- async callback / webhook handling
+- cloud service wrappers and integration logic
 
-**Representative modules:**
+Its role was intentionally stable and business-oriented, rather than serving as the primary long-running execution engine.
 
-- `backend/apps/authentication/`
-- `backend/apps/stories/`
-- `backend/apps/webhooks/`
-- `backend/apps/uploads/`
-- `backend/services/`
+### 4) Async Processing Layer — Serverless Workers
 
-Django's role was intentionally stable and business-oriented, rather than serving as the primary long-running execution engine.
-
-### 4) Async Processing Layer — AWS Lambda
-
-AWS Lambda formed the event-driven execution layer.
-
-This layer handled asynchronous work that would be poorly suited to the synchronous request/response cycle of the main backend.
+A serverless async layer handled long-running or event-triggered work that would be poorly suited to the synchronous backend request/response cycle.
 
 **Representative responsibilities:**
 
-- generation request creation
-- presigned upload support
-- S3 event listening
-- LLM trigger logic
+- generation request initialization
+- upload event processing
+- structured content generation triggers
 - image generation triggers
 - output aggregation
-- inference / training workflow initiation
+- offline / model-related workflow initiation
+- result finalization callbacks
 
-**Representative Lambda units:**
+This layer kept generation-heavy and event-driven work outside the synchronous application path.
 
-- Gen_Request_Handler
-- S3-Event-Listener
-- LLM-Trigger
-- tinydoor-lambda
-- Gen_Result_Handler
-- Inference-Trigger
-- TinyDoorTrainingTrigger
-
-This layer kept long-running, event-driven, and generation-heavy tasks outside the synchronous backend path.
+> **Note:** Worker responsibilities and names in this repository are intentionally generalized and do not reflect production-identical internal service naming.
 
 ### 5) Data Layer
 
@@ -272,15 +274,15 @@ TinyDOOR used a multi-store architecture, with each store serving a distinct pur
 
 | Store | Purpose |
 |-------|---------|
-| **PostgreSQL** | Application state, users, request metadata, durable backend entities, status-oriented product records |
-| **Amazon S3** | Raw user inputs, uploaded images, intermediate artifacts, generated page outputs, final story assets, request-level artifacts, timeout recovery state |
-| **AWS Cognito** | Identity, JWT/token issuance, protected access state, auth boundary separation from application logic |
+| **Relational Database** | Application state, users, request metadata, durable backend entities, status-oriented product records |
+| **Object Storage** | Uploaded inputs, intermediate artifacts, generated outputs, final assets, workflow artifacts, resumable processing context |
+| **Managed Identity Service** | Identity, token issuance, protected access state, separation of auth concerns from core application logic |
 
 This separation allowed the system to keep:
 
 - business state in a queryable database
 - workflow artifacts in object storage
-- identity concerns in a managed auth service
+- identity concerns in a managed auth boundary
 
 ---
 
@@ -288,18 +290,21 @@ This separation allowed the system to keep:
 
 One of the central engineering patterns in TinyDOOR was the explicit request-state lifecycle.
 
-### Simplified Lifecycle
+### Conceptual Lifecycle Pattern
 
+The system used an explicit **multi-stage, pollable, recoverable** request lifecycle.
+
+A simplified conceptual progression might look like:
+
+```text
+Collected
+  → Processing
+  → Generating
+  → Complete
+  (or Failed)
 ```
-PENDING
-  → UPLOAD_COMPLETE
-  → ANALYSING
-  → ANALYSE_COMPLETE
-  → GENERATING
-  → VERIFYING
-  → GENERATION_COMPLETE
-  (or FAILED)
-```
+
+This illustrates the architecture pattern: durable state transitions that support polling UX, observability, and recovery — not a production-identical state machine.
 
 ### Why This Matters
 
@@ -311,133 +316,106 @@ This lifecycle was a key architectural primitive because it:
 - made async workflows understandable to the user
 - provided a stable abstraction across multiple generation stages
 
-This was one of the clearest examples of TinyDOOR behaving like a workflow system, not a simple CRUD app or one-shot inference service.
+This is one of the clearest examples of TinyDOOR behaving like a workflow system, not a simple CRUD app or one-shot inference service.
 
 ---
 
 ## End-to-End Story Generation Flow
 
-A simplified end-to-end flow looked like this:
+Conceptually, the flow followed an **asynchronous multi-stage pipeline**:
 
-1. The user submits personalization inputs
-2. A generation request is created
-3. Request metadata is persisted
-4. The user uploads images
-5. S3 events trigger downstream processing
-6. The LLM stage generates structured story output
-7. Image generation creates multi-page visual assets
-8. Result handlers aggregate outputs
-9. Request state is updated to completion (or failure)
-10. The frontend polls for updates and renders final outputs
+1. User inputs and media are collected
+2. A generation request is created and persisted
+3. Storage events or callbacks trigger async processing
+4. Content and visual generation run in stages
+5. Results are aggregated and state is updated
+6. The frontend polls for updates and renders outputs
 
-### Simplified Flow Diagram
+### Conceptual Flow (High-Level)
 
 ```text
-User Input + Uploads
+Input Collection
         ↓
-Create Request
+Request Creation + Persistence
         ↓
-Persist Metadata (DB)
+Async Processing (content + assets)
         ↓
-Store Raw Assets (S3)
+Result Aggregation + State Update
         ↓
-S3 Event Trigger
-        ↓
-LLM Processing
-        ↓
-Image Generation
-        ↓
-Result Aggregation
-        ↓
-State Update (DB)
-        ↓
-Frontend Polling + Final Delivery
+Frontend Polling + Delivery
 ```
 
-This is fundamentally an **asynchronous multi-stage AI pipeline**, not a synchronous request/response system.
+This is fundamentally an **asynchronous multi-stage AI pipeline** — multi-phase, recoverable, and polling-friendly — not a synchronous request/response system.
 
 ---
 
-## S3-Centric Storage Design
+## Artifact Storage Pattern
 
-TinyDOOR used Amazon S3 as more than simple file storage.
+TinyDOOR used object storage as more than simple file storage.
 
-In practice, S3 acted as part of the system's workflow memory and artifact backbone.
+In practice, storage acted as part of the system's workflow memory and artifact backbone.
 
-### Example Request-Level Structure
+### Design Principles (Pattern-Level)
 
-```text
-gen_requests/<user_id>/<req_uuid>/
-├── raw_inputs/
-├── llm_outputs/
-│   └── llm_output.json
-├── raw_gen_outputs/
-│   ├── page_1/
-│   ├── page_2/
-│   ├── ...
-│   └── page_10/
-├── finalised_images/
-│   ├── page_1.png
-│   ├── page_2.png
-│   ├── ...
-│   └── page_10.png
-└── image_gen_job.json
-```
+The storage design followed these principles rather than any specific folder layout:
 
-### Why This Structure Worked
+- **User-scoped isolation** — Artifacts organized by user to support multi-tenancy and access control
+- **Request-level isolation** — Each generation request had its own logical namespace
+- **Lifecycle-tiered organization** — Inputs, intermediate outputs, and final outputs separated by processing stage
+- **Recoverability** — Enough context persisted to resume or retry long-running work
 
-It supported:
+This pattern supported:
 
 - request-level isolation
 - user-level organization
 - intermediate artifact recovery
 - final-output retrieval
 - partial progress continuation
-- timeout-aware resume logic
+- resumable processing for long-running jobs
 
-**This is an important architectural pattern:** S3 was not just a passive bucket — it was part of the operational workflow model.
+**Key idea:** Object storage was not just a passive bucket — it was part of the operational workflow model.
 
 ---
 
 ## Key Engineering Decisions
 
-### 1) Dual-Backend Split (Django + Lambda)
+### 1) Stable Backend + Async Worker Split
 
-TinyDOOR intentionally split responsibilities:
+TinyDOOR intentionally separated responsibilities:
 
-- **Django** = stable business APIs, auth, persistence, status queries
-- **Lambda** = request creation, async orchestration, generation triggers, output processing
+- **Application backend** = stable business APIs, auth, persistence, status queries
+- **Async workers** = request initialization, orchestration, generation triggers, output processing
 
-This separation helped:
+This helped:
 
 - keep business state stable
 - isolate long-running work from synchronous APIs
 - make async workflows easier to scale
 - reduce coupling between product-facing state and generation execution
 
-### 2) Cognito-Based Authentication
+### 2) Managed Authentication Boundary
 
-Authentication was handled via AWS Cognito, with JWT-based flows and protected backend routes.
+Authentication was handled through a managed identity service, with token-based access and protected backend routes.
 
 This allowed the product to:
 
 - separate identity from core business logic
 - leverage managed auth flows
 - protect backend APIs with token-based access
-- align frontend auth behavior with AWS-native infrastructure
+- keep application concerns focused on product state and workflow logic
 
-### 3) Timeout-Aware Serverless Recovery
+### 3) Continuation-Aware Serverless Design
 
-A notable production-oriented design feature was timeout-aware recovery for serverless execution.
+A notable production-oriented design feature was continuation-aware execution for serverless workloads.
 
 The general pattern:
 
-1. detect remaining execution time
+1. detect remaining execution budget
 2. persist enough state to resume
-3. re-invoke or continue when near timeout
+3. continue work in follow-up invocations when necessary
 4. skip already completed work where possible
 
-This matters because AI generation workflows often exceed the comfort zone of naive serverless execution.
+This matters because AI generation workflows often exceed the comfort zone of naive synchronous or short-lived execution.
 
 It improves:
 
@@ -446,28 +424,11 @@ It improves:
 - cost-aware execution
 - resilience under real-world workloads
 
-### 4) App Clip / Alternative Upload Path
+### 4) Flexible Input and Client Participation
 
-A specialized App Clip upload path suggested the system supported multiple media ingestion paths, not just standard browser uploads.
+The architecture supported **multiple input sources** (e.g. web upload, alternate clients) rather than assuming a single upload path.
 
-This reflects product architecture that considered:
-
-- mobile-adjacent flows
-- alternate client entry points
-- non-traditional upload experiences
-
-### 5) Frontend-Assisted Finalization
-
-The frontend participated in composing and uploading final page assets, rather than treating final rendering as purely backend-owned.
-
-This is a notable product-engineering decision because it shifts part of the asset-preparation workflow closer to the user-facing layer.
-
-That can improve:
-
-- responsiveness
-- user control
-- perceived speed
-- product flexibility for final asset handling
+Where appropriate, the **client participated in asset preparation** — some composition or finalization steps ran on the client rather than purely on the backend. This can improve responsiveness, perceived speed, and flexibility in output handling.
 
 ---
 
@@ -477,9 +438,9 @@ From a systems perspective, the strongest aspects of TinyDOOR's architecture wer
 
 - clear separation of stable vs async responsibilities
 - strong fit for long-running AI generation workflows
-- S3 functioning as workflow memory, not just storage
+- object storage functioning as workflow memory, not just storage
 - explicit request-state modeling for reliable polling UX
-- timeout-aware recovery for serverless reliability
+- continuation-aware serverless design for reliability
 - frontend and pipeline designed together rather than stitched together later
 
 These patterns make the architecture feel much closer to a **production AI product system** than a demo application.
@@ -492,8 +453,8 @@ Like any real system, this architecture also involved tradeoffs.
 
 ### Key Tradeoffs
 
-- Hybrid Django + Lambda ownership increases coordination complexity
-- Distributed state across DB / S3 / Lambda can complicate consistency guarantees
+- Hybrid backend + async worker ownership increases coordination complexity
+- Distributed state across DB / storage / workers can complicate consistency guarantees
 - Polling-based UX is simple and reliable, but adds repeated request overhead
 - Multi-stage workflows increase debugging and failure-handling complexity
 - Artifact-heavy pipelines require stronger observability and operational discipline
@@ -531,7 +492,7 @@ That shift is a major reason I'm especially interested in:
 - cloud infrastructure
 - async AI workflows
 - AI pipelines
-- MLOps-oriented architecture
+- production-oriented AI infrastructure
 
 ---
 
@@ -539,12 +500,12 @@ That shift is a major reason I'm especially interested in:
 
 If evolving this architecture further, some portfolio-safe directions would include:
 
-- stronger workflow orchestration (e.g. Step Functions or queue-backed job systems)
+- stronger workflow orchestration (e.g. state machines or queue-backed job systems)
 - better request tracing and centralized observability
 - more formal generation job objects / output manifests
-- clearer typed contracts between frontend, Django, Lambda, and output stages
-- a more explicit MLOps boundary between application backend and training/inference platform layers
-- migration from polling-heavy flows toward event push / websocket / pub-sub where appropriate
+- clearer typed contracts between frontend, backend, workers, and output stages
+- a more explicit separation between application services and model-processing infrastructure
+- gradual migration from polling-heavy flows toward push-based updates where appropriate
 
 These would improve maintainability, observability, and scalability as the system matures.
 
@@ -556,11 +517,14 @@ These would improve maintainability, observability, and scalability as the syste
 
 - proprietary source code
 - internal production endpoints
-- private schemas / credentials
+- private schemas or credentials
 - internal prompts or datasets
 - private UI assets
-- sensitive infrastructure identifiers
-- confidential business logic or customer-facing internals
+- internal infrastructure identifiers
+- confidential business logic
+- production-identical storage layouts
+- production-identical worker names
+- production-identical state machines
 
 **This repository is intentionally focused on:**
 
@@ -578,9 +542,9 @@ TinyDOOR is best understood as a **hybrid product-and-pipeline system**.
 It combines:
 
 - a polished frontend product flow
-- Django-backed business state
-- Lambda-based async orchestration
-- S3-backed workflow memory
+- durable backend business state
+- async worker-based orchestration
+- artifact-backed processing
 - multi-stage AI generation
 - polling-based result delivery
 - production-minded request lifecycle design
@@ -589,7 +553,7 @@ It combines:
 
 1. **Hybrid backend split**
 2. **Workflow-first architecture**
-3. **S3 as an artifact backbone**
+3. **Object storage as an artifact backbone**
 4. **Request lifecycle as a product primitive**
 5. **Production-minded async design**
 
@@ -599,15 +563,15 @@ This project was one of the most important steps in my growth as an engineer bec
 
 ## Final Note
 
-This repository is intended as a **system architecture portfolio artifact**.
+This repository is intended as a **public-safe system architecture portfolio artifact**.
 
 It is designed to demonstrate:
 
 - how a real AI product can be structured beyond a simple model call
 - how async workflows shape backend and product design
-- how cloud infrastructure choices affect reliability and UX
+- how infrastructure choices affect reliability and UX
 - how production AI systems require orchestration, recoverability, and state modeling
 
 **If you're reviewing this repository as a recruiter, engineer, or hiring manager**, the key takeaway is:
 
-> TinyDOOR was a real-world lesson in building AI products as **durable systems** — not just demos.
+> This project reflects real-world experience building AI products as **durable systems** — not just demos.
