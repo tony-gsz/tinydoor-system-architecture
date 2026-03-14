@@ -519,5 +519,3 @@ These would improve maintainability, observability, and scalability as the syste
 - engineering tradeoffs
 - system design maturity
 - production-oriented AI workflow patterns
-
----
